@@ -6,7 +6,7 @@ import './index.scss';
  * @param {Object} props
  * @param {{
  * name: string,
- * image: string,
+ * image_url: string,
  * description: string,
  * permalink: string,
  * }} props.item
@@ -21,7 +21,7 @@ function Modal({ item, handleCloseModal }) {
           &times;
         </span>
         <h2>{item.name}</h2>
-        <img src={item.image} alt={item.name} />
+        <img src={item.image_url} alt={item.name} />
         <p>{item.description}</p>
         <a href={item.permalink} target="_blank" rel="noreferrer">
           Purchase on OpenSea
