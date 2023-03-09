@@ -6,17 +6,18 @@ import { useFetchNFT } from "../../hooks/useFetchNFT";
 import Loader from "../Loader";
 
 function NFTListing() {
-  const [nfts, setNFTs] = useState([]);
-  const [uiState, setUIState] = useState({
+
+  const [state, setState] = useState({
+    data: [],
     state: "idle", // idle, loading, error
     error: null,
-    limit: 20, 
-    offset: 0
-  }); // idle, loading, error
+    limit: 20,
+    offset: 0,
+  });
 
   const [selectedNFT, setSelectedNFT] = useState(null);
 
-  useFetchNFT(setUIState, uiState, setNFTs);
+  useFetchNFT(state, setState);
 
   const handleCardClick = (nft) => {
     setSelectedNFT(nft);
@@ -27,23 +28,24 @@ function NFTListing() {
   };
 
   const handleNextClick = () => {
-    setUIState({
-      ...uiState,
-      offset: uiState.offset + uiState.limit
+    setState({
+      ...state,
+      offset: state.offset + state.limit
     });
   };
 
   return (
     <>
       <div className="nft-listing">
-        {nfts.map((nft) => (
+        {state.data.map((nft) => (
           <NFTCard item={nft} handleCardClick={handleCardClick} key={nft.id} />
         ))}
         
         {selectedNFT && <Modal item={selectedNFT} handleCloseModal={handleCloseModal} />}
       </div>
-      {uiState.state === "loading" && <Loader />}
-      {uiState.state !== "loading" && <button onClick={handleNextClick} className="next-btn">NEXT</button>}
+      {state.state === "loading" && <Loader />}
+      {state.state === "idle" && <button onClick={handleNextClick} className="next-btn">NEXT</button>}
+      {state.state === "error" && <p className="error">{state.error}</p>}
     </>
   );
 }

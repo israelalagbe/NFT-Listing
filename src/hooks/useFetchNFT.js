@@ -1,29 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchNFTs } from "../api/nft";
 import scrollToTop from "../utils/scrollToTop";
 
-export function useFetchNFT(setUIState, uiState, setNFTs) {
+export function useFetchNFT(state, setState) {
   useEffect(() => {
-    setUIState({
-      ...uiState,
+    setState({
+      ...state,
       state: "loading",
     });
 
-    fetchNFTs(uiState)
+    fetchNFTs(state)
       .then((nfts) => {
-        setNFTs(nfts);
-        setUIState({
-          ...uiState,
+        setState({
+          ...state,
           state: "idle",
+          data: nfts,
         });
         scrollToTop();
       })
       .catch((error) => {
-        setUIState({
-          ...uiState,
+        setState({
+          ...state,
           state: "error",
-          error: error.message,
+          error: error?.message ?? "Oops! Something went wrong.",
         });
       });
-  }, [uiState.limit, uiState.offset]);
+  }, [state.limit, state.offset]);
+
+  return state;
 }

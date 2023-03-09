@@ -1,6 +1,6 @@
 
 export function fetchNFTs({offset,limit}) {
-  return fetch(`https://testnets-api.opensea.io/api/v1/assets?offset=${offset}&limit=${limit}&include_orders=false`)
+  return fetch(`https://testnets-api.opensea.io/api/v1/assets?order_direction=desc&offset=${offset}&limit=${limit}&include_orders=false`)
     .then((response) => response.json())
     .then((data) => data.assets)
     .then((nfts) => nfts.map((nft) => ({
