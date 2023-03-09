@@ -1,38 +1,48 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css?family=Amiko:300,400,700|Open+Sans:400,600,700");
+
+body{
+  /* background-color: rgb(26, 32, 39); */
+  background: #03041a;
+  font-family: Amiko;
+}
+.nft-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.nft-card {
+  /* background-color: rgb(18, 18, 18);; */
+  /* border: 1px solid #ddd; */
+  border: 1px solid #0fd9b6;
+    box-shadow: 0 0 15px 0 rgb(15 217 182 / 36%);
+  border-radius: 8px;
+  /* box-shadow: 0 0 10px rgba(146, 145, 145, 0.8); */
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.nft-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nft-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.nft-card h3 {
+  margin: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.nft-card p {
+  margin: 0 1rem 1rem;
+  font-size: 1rem;
 }
