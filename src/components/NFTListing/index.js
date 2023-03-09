@@ -1,44 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { fetchNFTs } from "../../api/nft";
+import React, { useState } from "react";
 import Modal from "../Modal";
 import NFTCard from "../NFTCard";
 import './index.scss';
+import { useFetchNFT } from "../../hooks/useFetchNFT";
+import Loader from "../Loader";
 
 function NFTListing() {
   const [nfts, setNFTs] = useState([]);
-  const [uiState, setUIState] = useState("idle"); // idle, loading, error
+  const [uiState, setUIState] = useState({
+    state: "idle", // idle, loading, error
+    error: null,
+    limit: 20, 
+    offset: 0
+  }); // idle, loading, error
 
   const [selectedNFT, setSelectedNFT] = useState(null);
 
-  useEffect(() => {
-    // async function fetchData() {
-    //   // const nfts = await getNFTs(address);
-    //   const nfts = [];
-    //   for (let i = 0; i < 10; i++) {
-    //     nfts.push({
-    //       id: i,
-    //       name: "Staff Name",
-    //       image_url:
-    //         "https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg",
-    //       description: "Start editing to see some magic happen :)",
-    //       permalink:
-    //         "https://testnets.opensea.io/assets/goerli/0xf5de760f2e916647fd766b4ad9e85ff943ce3a2b/3070735",
-    //     });
-    //   }
-    //   console.log(nfts);
-    //   setNFTs(nfts);
-    // }
-    fetchNFTs().then((nfts) => {
-      console.log({
-        nfts
-      })
-      setNFTs(nfts);
-      setUIState("idle");
-    })
-    .catch((error) => {
-      setUIState("error");
-    });
-  }, []);
+  useFetchNFT(setUIState, uiState, setNFTs);
 
   const handleCardClick = (nft) => {
     setSelectedNFT(nft);
@@ -48,15 +26,28 @@ function NFTListing() {
     setSelectedNFT(null);
   };
 
-  return (
-    <div className="nft-listing">
-      {nfts.map((nft) => (
-        <NFTCard item={nft} handleCardClick={handleCardClick} key={nft.id} />
-      ))}
+  const handleNextClick = () => {
+    setUIState({
+      ...uiState,
+      offset: uiState.offset + uiState.limit
+    });
+  };
 
-      {selectedNFT && <Modal item={selectedNFT} handleCloseModal={handleCloseModal} />}
-    </div>
+  return (
+    <>
+      <div className="nft-listing">
+        {nfts.map((nft) => (
+          <NFTCard item={nft} handleCardClick={handleCardClick} key={nft.id} />
+        ))}
+        
+        {selectedNFT && <Modal item={selectedNFT} handleCloseModal={handleCloseModal} />}
+      </div>
+      {uiState.state === "loading" && <Loader />}
+      {uiState.state !== "loading" && <button onClick={handleNextClick} className="next-btn">NEXT</button>}
+    </>
   );
 }
 
 export default NFTListing;
+
+
