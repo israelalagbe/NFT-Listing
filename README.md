@@ -1,8 +1,10 @@
-# Getting Started with Create React App
+# NFT Listing App created with React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Screenshot
 
-## Available Scripts
+<img width="1728" alt="Screenshot 2023-03-09 at 11 45 02 AM" src="https://user-images.githubusercontent.com/22811493/224002455-ab9a2c14-f13e-4973-9270-2992d519e27f.png">
+
+## Setup
 
 In the project directory, you can run:
 
